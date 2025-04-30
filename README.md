@@ -4,7 +4,7 @@
 *A simple, secure way to delegate root commands without bloat.*  
 
 ✔ **Shadow password auth**  
-✔ **Single config file** `/etc/lx.conf` =>  permit username 
+✔ **Single config file** `/etc/lx.conf` -> permit username 
 ✔ **Zero PAM/systemd dependencies**  
 ✔ **Designed for minimal distros/embedded systems**  
 

@@ -13,4 +13,4 @@
 
 ## Installation
 ```sh
-sudo make clean install
+git clone https://github.com/LearnixOS/lx && cd lx && sudo make clean install

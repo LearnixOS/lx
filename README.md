@@ -5,6 +5,7 @@
 
 ✔ **Shadow password auth**  
 ✔ **Single config file** `/etc/lx.conf` -> permit username 
+
 ✔ **Zero PAM/systemd dependencies**  
 ✔ **Designed for minimal distros/embedded systems**  
 

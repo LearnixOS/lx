@@ -2,13 +2,35 @@ PREFIX ?= /usr/
 BINDIR ?= $(PREFIX)/bin
 MANDIR ?= $(PREFIX)/share/man
 
-CFLAGS ?= -O2 -Wall -Wextra
+CFLAGS ?= -O2 -Wall -Wextra -pedantic
 LDFLAGS ?= -lcrypt
+
+OBJS = lx.o
+
+PERSIST_MSG = "without persistence"
+
+ifeq ($(PERSIST),1)
+	CFLAGS += -DPERSIST=1
+	OBJS += persist.o
+	PERSIST_MSG = "with persistence enabled"
+endif
+ifeq ($(PERSIST), 0)
+	CFLAGS += -DPERSIST=0
+endif
 
 all: lx
 
-lx: lx.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+lx: $(OBJS)
+	@echo "Linking lx $(PERSIST_MSG)... "
+	$(CC) $(OBJS) $(LDFLAGS) -o lx
+
+lx.o: lx.c persist.h
+	@echo "Compiling lx.c $(PERSIST_MSG)..."
+	$(CC) $(CFLAGS) -c lx.c -o lx.o
+
+persist.o: persist.c persist.h
+	@echo "Compiling persist.c..."
+	$(CC) $(CFLAGS) -c persist.c -o persist.o
 
 install: lx
 	install -d $(DESTDIR)$(BINDIR)
@@ -21,6 +43,7 @@ uninstall:
 	rm -f $(DESTDIR)/etc/lx.conf
 
 clean:
-	rm -f lx
+	rm -f lx lx.o persist.o
+	@echo "Cleaned build files."
 
 .PHONY: all install uninstall clean
